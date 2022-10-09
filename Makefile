@@ -1,9 +1,10 @@
+TOPDIR=$(PWD)
 url_buildroot = https://buildroot.org/downloads/buildroot-2018.02.tar.gz
 archive_buildroot = buildroot.tar.gz
 dir_download = downloads
 dir_configs = configs
 dir_buildroot = buildroot
-dir_publish = /srv/tftp/stm32f769/
+dir_publish = $(TOPDIR)/srv/tftp/stm32f769
 
 bootstrap:
 	mkdir -p $(dir_download)
@@ -13,6 +14,7 @@ bootstrap:
 	cp $(dir_configs)/buildroot $(dir_buildroot)/.config
 
 build:
+	mkdir -p $(dir_publish)
 	make -j10 -C $(dir_buildroot)
 	cp $(dir_buildroot)/output/images/stm32f769-disco.dtb ${dir_publish}/
 	cp $(dir_buildroot)/output/images/zImage ${dir_publish}/

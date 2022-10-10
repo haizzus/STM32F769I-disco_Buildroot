@@ -12,6 +12,8 @@ bootstrap:
 	wget -O $(dir_download)/$(archive_buildroot) $(url_buildroot)
 	tar zxvf $(dir_download)/$(archive_buildroot) -C $(dir_buildroot) --strip-components=1
 	cp $(dir_configs)/buildroot $(dir_buildroot)/.config
+	# workaround for m4 build error, upgrade form 1.4.18 -> 1.4.19
+	cp -f $(TOPDIR)/patches/buildroot/package/m4/* $(TOPDIR)/buildroot/package/m4
 
 build:
 	mkdir -p $(dir_publish)
